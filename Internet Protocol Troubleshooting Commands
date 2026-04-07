@@ -1,0 +1,298 @@
+login as: ec2-user
+Authenticating with public key "imported-openssh-key"
+   ,     #_
+   ~\_  ####_        Amazon Linux 2
+  ~~  \_#####\
+  ~~     \###|       AL2 End of Life is 2026-06-30.
+  ~~       \#/ ___
+   ~~       V~' '->
+    ~~~         /    A newer version of Amazon Linux is available!
+      ~~._.   _/
+         _/ _/       Amazon Linux 2023, GA and supported until 2028-03-15.
+       _/m/'           https://aws.amazon.com/linux/amazon-linux-2023/
+
+[ec2-user@ip-10-0-10-204 ~]$ ping 8.8.8.8 -c 5
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=6.06 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=117 time=6.08 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=117 time=5.99 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=117 time=5.99 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=117 time=6.01 ms
+
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4004ms
+rtt min/avg/max/mdev = 5.996/6.032/6.082/0.061 ms
+[ec2-user@ip-10-0-10-204 ~]$ traceroute 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  240.1.228.68 (240.1.228.68)  8.036 ms 240.1.228.12 (240.1.228.12)  8.223 ms 240.1.228.15 (240.1.228.15)  8.689 ms
+ 2  242.16.82.239 (242.16.82.239)  6.624 ms 242.4.195.193 (242.4.195.193)  7.567 ms 242.4.194.71 (242.4.194.71)  6.580 ms
+ 3  * 99.82.10.6 (99.82.10.6)  8.118 ms *
+ 4  99.83.116.81 (99.83.116.81)  6.316 ms 99.83.117.221 (99.83.117.221)  6.309 ms 99.82.10.9 (99.82.10.9)  6.158 ms
+ 5  * 192.178.105.41 (192.178.105.41)  6.100 ms *
+ 6  dns.google (8.8.8.8)  7.504 ms  7.744 ms  7.577 ms
+[ec2-user@ip-10-0-10-204 ~]$ sudo yum install telnet -y
+Loaded plugins: extras_suggestions, langpacks, priorities,
+              : update-motd
+amzn2-core                            | 3.6 kB     00:00
+Resolving Dependencies
+--> Running transaction check
+---> Package telnet.x86_64 1:0.17-65.amzn2 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=============================================================
+ Package   Arch      Version             Repository     Size
+=============================================================
+Installing:
+ telnet    x86_64    1:0.17-65.amzn2     amzn2-core     64 k
+
+Transaction Summary
+=============================================================
+Install  1 Package
+
+Total download size: 64 k
+Installed size: 109 k
+Downloading packages:
+telnet-0.17-65.amzn2.x86_64.rpm         |  64 kB   00:00
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:telnet-0.17-65.amzn2.x86_64             1/1
+  Verifying  : 1:telnet-0.17-65.amzn2.x86_64             1/1
+
+Installed:
+  telnet.x86_64 1:0.17-65.amzn2
+
+Complete!
+[ec2-user@ip-10-0-10-204 ~]$ telnet www.google.com 80
+Trying 142.251.157.119...
+Connected to www.google.com.
+Escape character is '^]'.
+^]
+telnet> quit
+Connection closed.
+[ec2-user@ip-10-0-10-204 ~]$ curl -vLo /dev/null https://aws.com
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 3.169.173.19:443...
+* Connected to aws.com (3.169.173.19) port 443
+* ALPN: curl offers h2,http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/pki/tls/certs/ca-bundle.crt
+*  CApath: none
+{ [5 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [3786 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=aws.com
+*  start date: Jan 30 00:00:00 2026 GMT
+*  expire date: Feb 27 23:59:59 2027 GMT
+*  subjectAltName: host "aws.com" matched cert's "aws.com"
+*  issuer: C=US; O=Amazon; CN=Amazon RSA 2048 M04
+*  SSL certificate verify ok.
+{ [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://aws.com/
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: aws.com]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.3.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET / HTTP/2
+> Host: aws.com
+> User-Agent: curl/8.3.0
+> Accept: */*
+>
+{ [5 bytes data]
+< HTTP/2 302
+< content-type: text/html
+< content-length: 110
+< location: https://www.aws.com:443/
+< server: awselb/2.0
+< date: Tue, 07 Apr 2026 19:58:09 GMT
+< x-cache: Miss from cloudfront
+< via: 1.1 6957b6fac4a3f8180355a074ea5833e2.cloudfront.net (CloudFront)
+< x-amz-cf-pop: HIO52-P4
+< x-amz-cf-id: oxwT32bVR1bwJvJrPxreXKh6m3b3qM8-JO8diXgucHL0MDl4RUUi2w==
+< strict-transport-security: max-age=63072000; includeSubDomains; preload
+<
+* Ignoring the response-body
+{ [110 bytes data]
+100   110  100   110    0     0   2173      0 --:--:-- --:--:-- --:--:--  2200
+* Connection #0 to host aws.com left intact
+* Issue another request to this URL: 'https://www.aws.com:443/'
+*   Trying 3.169.173.19:443...
+* Connected to www.aws.com (3.169.173.19) port 443
+* ALPN: curl offers h2,http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/pki/tls/certs/ca-bundle.crt
+*  CApath: none
+{ [5 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [3786 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=aws.com
+*  start date: Jan 30 00:00:00 2026 GMT
+*  expire date: Feb 27 23:59:59 2027 GMT
+*  subjectAltName: host "www.aws.com" matched cert's "www.aws.com"
+*  issuer: C=US; O=Amazon; CN=Amazon RSA 2048 M04
+*  SSL certificate verify ok.
+{ [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://www.aws.com:443/
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: www.aws.com]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.3.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET / HTTP/2
+> Host: www.aws.com
+> User-Agent: curl/8.3.0
+> Accept: */*
+>
+{ [5 bytes data]
+< HTTP/2 301
+< content-type: text/html; charset=iso-8859-1
+< content-length: 271
+< location: https://aws.amazon.com/
+< date: Tue, 07 Apr 2026 19:58:09 GMT
+< server: Server
+< cache-control: no-store, no-cache, must-revalidate
+< x-frame-options: SAMEORIGIN
+< x-xss-protection: 1; mode=block
+< strict-transport-security: max-age=47304000; includeSubDomains
+< x-cache: Miss from cloudfront
+< via: 1.1 9b38ff4b39c6c0a269c601916dab060e.cloudfront.net (CloudFront)
+< x-amz-cf-pop: HIO52-P4
+< x-amz-cf-id: UGVcGCyezbKfbIkI03DR40hGfwW5RqRkH6FV-0QsIC96eHJ-ZaY20A==
+<
+* Ignoring the response-body
+{ [271 bytes data]
+100   271  100   271    0     0   1898      0 --:--:-- --:--:-- --:--:--  1898
+* Connection #1 to host www.aws.com left intact
+* Issue another request to this URL: 'https://aws.amazon.com/'
+*   Trying 3.163.24.103:443...
+* Connected to aws.amazon.com (3.163.24.103) port 443
+* ALPN: curl offers h2,http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+} [5 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/pki/tls/certs/ca-bundle.crt
+*  CApath: none
+{ [5 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [3932 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+{ [1 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=aws.amazon.com
+*  start date: Nov  6 00:00:00 2025 GMT
+*  expire date: Oct 17 23:59:59 2026 GMT
+*  subjectAltName: host "aws.amazon.com" matched cert's "aws.amazon.com"
+*  issuer: C=US; O=Amazon; CN=Amazon RSA 2048 M04
+*  SSL certificate verify ok.
+{ [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://aws.amazon.com/
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: aws.amazon.com]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.3.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET / HTTP/2
+> Host: aws.amazon.com
+> User-Agent: curl/8.3.0
+> Accept: */*
+>
+{ [5 bytes data]
+< HTTP/2 200
+< content-type: text/html;charset=utf-8
+< date: Tue, 07 Apr 2026 19:58:10 GMT
+< set-cookie: aws-priv=eyJ2IjoxLCJldSI6MCwic3QiOjB9; Version=1; Comment="Anonymous cookie for privacy regulations"; Domain=.aws.amazon.com; Max-Age=31536000; Expires=Wed, 07 Apr 2027 19:58:09 GMT; Path=/; Secure
+< set-cookie: aws_lang=en; Domain=.amazon.com; Path=/
+< x-content-type-options: nosniff
+< server: Server
+< x-frame-options: SAMEORIGIN
+< x-xss-protection: 1; mode=block
+< strict-transport-security: max-age=47304000; includeSubDomains
+< x-amz-id-1: DD5A9CEA293940CFBA07
+< last-modified: Fri, 03 Apr 2026 19:02:52 GMT
+< vary: accept-encoding
+< x-cache: Miss from cloudfront
+< via: 1.1 eb6e5a827e45274130b33c12b0d48aaa.cloudfront.net (CloudFront)
+< x-amz-cf-pop: HIO52-P2
+< x-amz-cf-id: 3zaVoP2txrtbHl30ENCwkkCBSthzyXOgxRnFdBuNmitp6mPNZqlbGQ==
+<
+{ [23865 bytes data]
+100  325k    0  325k    0     0  1373k      0 --:--:-- --:--:-- --:--:-- 1373k
+* Connection #2 to host aws.amazon.com left intact
+[ec2-user@ip-10-0-10-204 ~]$ git config --global user.name "Your Name"git config --global user.name "Simisola Alabi"
+-bash: git: command not found
+[ec2-user@ip-10-0-10-204 ~]$
